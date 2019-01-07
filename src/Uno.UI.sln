@@ -80,7 +80,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Uno.UI.Wasm", "Uno.UI.Wasm\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Build", "_Build", "{1071515E-5F7A-4DE5-9F06-655BDCA5D6FD}"
 	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
+		..\.editorconfig = ..\.editorconfig
+		..\.vsts-ci.yml = ..\.vsts-ci.yml
 		Uno.CrossTargetting.props = Uno.CrossTargetting.props
 	EndProjectSection
 EndProject
