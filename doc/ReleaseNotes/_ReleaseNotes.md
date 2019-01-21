@@ -112,6 +112,7 @@
  * #491 DataTemplateSelector.SelectTemplate is not called on iOS and Android. The behavior is now closer to UWP.
  * 144268 / #493 : Resources outside of 'en' folder not working
  * Support for duplicate XAML `AutomationProperties.Name`
+ * Transforms are now fully functionnal
 
 ## Release 1.42
 

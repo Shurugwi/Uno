@@ -7,7 +7,11 @@ using Uno.Presentation.Resources;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
 using System.ComponentModel;
+using Windows.UI.Xaml.Media;
+using Android.Graphics;
+using Android.Views.Animations;
 using Uno.Disposables;
+using Uno.UI.Media;
 
 namespace Uno.UI.Controls
 {
@@ -20,7 +24,7 @@ namespace Uno.UI.Controls
 		DependencyObject,
 		IShadowChildrenProvider
 	{
-		private List<View> _childrenShadow = new List<View>();
+		private readonly List<View> _childrenShadow = new List<View>();
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -199,6 +203,44 @@ namespace Uno.UI.Controls
 			for (int i = reorderIndex; i < _childrenShadow.Count; i++)
 			{
 				_childrenShadow[i].BringToFront();
+			}
+		}
+
+
+		private readonly Dictionary<View, NativeRenderTransformAdapter> _childrenTransformations = new Dictionary<View, NativeRenderTransformAdapter>();
+
+		internal void RegisterChildTransform(NativeRenderTransformAdapter transformation)
+		{
+			_childrenTransformations[transformation.Owner] = transformation;
+
+			if (_childrenTransformations.Count == 1) // No matter if we only changed the transform of the same view
+			{
+				SetStaticTransformationsEnabled(true);
+			}
+		}
+
+		internal void UnregisterChildTransform(NativeRenderTransformAdapter transformation)
+		{
+			_childrenTransformations.Remove(transformation.Owner);
+
+			if (_childrenTransformations.Count == 0)
+			{
+				SetStaticTransformationsEnabled(false);
+			}
+		}
+
+		/// <inheritdoc />
+		protected override bool GetChildStaticTransformation(View child, Transformation outTransform)
+		{
+			if (_childrenTransformations.TryGetValue(child, out var transform)
+				&& !transform.Matrix.IsIdentity)
+			{
+				outTransform.Set(transform.Matrix);
+				return true;
+			}
+			else
+			{
+				return false;
 			}
 		}
 

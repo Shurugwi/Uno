@@ -1,8 +1,7 @@
 ﻿using Android.Graphics;
 using System;
-using System.Collections.Generic;
+using System.Numerics;
 using Windows.Foundation;
-using System.Text;
 
 namespace Windows.UI.Xaml.Media
 {
@@ -11,7 +10,7 @@ namespace Windows.UI.Xaml.Media
 	/// </summary>
 	public partial class Transform
 	{
-		internal virtual Android.Graphics.Matrix ToNativeTransform(Android.Graphics.Matrix targetMatrix = null, Size size = new Size(), bool isBrush = false)
+		internal virtual Android.Graphics.Matrix ToNative(Android.Graphics.Matrix targetMatrix = null, Size size = new Size(), bool isBrush = false)
 		{
 			throw new NotImplementedException();
 		}
